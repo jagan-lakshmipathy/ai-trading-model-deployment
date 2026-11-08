@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: ai-trading-model-deployment
+Version: 0.1.0
+Summary: MCP-based deployment of the price-prediction model trained in ai-trading-model.
+Requires-Python: >=3.10
+Requires-Dist: torch>=2.2
+Requires-Dist: pandas>=2.0
+Requires-Dist: numpy>=1.26
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: mcp>=2.0

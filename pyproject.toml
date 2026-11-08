@@ -1,0 +1,25 @@
+[project]
+name = "ai-trading-model-deployment"
+version = "0.1.0"
+description = "MCP-based deployment of the price-prediction model trained in ai-trading-model."
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2",
+    "pandas>=2.0",
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+    "mcp>=2.0",
+    "fredapi>=0.5",
+    "massive>=2.9",
+    "pandas_market_calendars>=4.0",
+]
+
+[project.optional-dependencies]
+plotting = ["matplotlib>=3.8"]  # scripts/plot_predictions.py only, not needed to run the server
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["server*"]

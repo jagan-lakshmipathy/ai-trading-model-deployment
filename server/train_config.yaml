@@ -1,0 +1,33 @@
+data:
+  trading_db: data/trading_data.db
+  regime_db: data/hf_regime_data.db
+  fred_csv: data/fred_econ_data_6yrs.csv
+  tickers: [AAL, AAPL, AMD, AMZN, BAC, BMNR, F, GOOGL, INTC, IREN, META, MSFT, MU, NOK, NU, NVDA, ONDS, PATH, PCG, PLTR, PLUG, SPCX, TSLA]
+  regime_tickers: [SPY, QQQ, IWM, HYG, TLT, GLD, USD]
+  # Span of data to use, measured from the earliest available bar for the selected tickers.
+  # Set to 2.0 for the 1.5y/0.25y/0.25y plumbing test; raise to the full ~5 years once validated.
+  years: 5.0
+  train_pct: 0.84
+  val_pct: 0.08
+  test_pct: 0.08
+
+model:
+  horizons: [5, 10, 15]
+  hidden_size: 128
+  num_layers: 2
+  head_hidden_size: 64
+  dropout: 0.1
+
+training:
+  batch_size: 32
+  chunk_len: 64
+  epochs: 300
+  learning_rate: 0.001
+  weight_decay: 0.0
+  grad_clip_norm: 1.0
+  lr_patience: 15
+  lr_factor: 0.5
+  min_lr: 1.0e-5
+  seed: 42
+  device: cuda
+  checkpoint_path: checkpoints/best_model.pt

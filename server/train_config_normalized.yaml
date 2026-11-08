@@ -1,0 +1,38 @@
+data:
+  trading_db: data/trading_data.db
+  regime_db: data/hf_regime_data.db
+  fred_csv: data/fred_econ_data_6yrs.csv
+  tickers: [AAL, AAPL, AMD, AMZN, BAC, BMNR, F, GOOGL, INTC, IREN, META, MSFT, MU, NOK, NU, NVDA, ONDS, PATH, PCG, PLTR, PLUG, SPCX, TSLA]
+  regime_tickers: [SPY, QQQ, IWM, HYG, TLT, GLD, USD]
+  years: 5.0
+  train_pct: 0.84
+  val_pct: 0.08
+  test_pct: 0.08
+
+model:
+  horizons: [5, 10, 15]
+  hidden_size: 128
+  num_layers: 2
+  head_hidden_size: 64
+  dropout: 0.1
+
+training:
+  # Hyperparameters deliberately tightened vs. config/train_config.yaml (the unnormalized
+  # baseline) based on the first normalized run: pre-clip grad norms spiked into the
+  # billions (vs. thousands for the baseline) and train_loss plateaued by ~epoch 60-70 with
+  # no further real improvement through epoch 300 -- see docs/server-docs/plan.md. `grad_clip_norm`
+  # lowered to curb the worse instability; `epochs` kept as a high safety cap since
+  # `early_stop_patience` now actually terminates the run once val_loss stops improving.
+  batch_size: 32
+  chunk_len: 64
+  epochs: 300
+  learning_rate: 0.001
+  weight_decay: 0.0
+  grad_clip_norm: 0.5
+  lr_patience: 15
+  lr_factor: 0.5
+  min_lr: 1.0e-5
+  early_stop_patience: 40
+  seed: 42
+  device: cuda
+  checkpoint_path: checkpoints/best_model_normalized.pt
